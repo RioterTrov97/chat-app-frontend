@@ -42,6 +42,10 @@ function ChatPage({ match, socket }) {
 
 	useEffect(() => {
 		getChatroomName();
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
 		getAllMessages();
 		// eslint-disable-next-line
 	}, [toggle]);
@@ -49,8 +53,8 @@ function ChatPage({ match, socket }) {
 	const sendMessage = (e) => {
 		e.preventDefault();
 		if (socket) {
-			setMessageData('');
 			socket.emit('ChatroomMessage', chatroomId, messageData);
+			setMessageData('');
 		}
 	};
 
@@ -77,8 +81,8 @@ function ChatPage({ match, socket }) {
 		e.preventDefault();
 		if (e.key === 'Enter') {
 			if (socket) {
-				setMessageData('');
 				socket.emit('ChatroomMessage', chatroomId, messageData);
+				setMessageData('');
 			}
 		}
 	};
