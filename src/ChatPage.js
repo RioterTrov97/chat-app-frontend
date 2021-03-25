@@ -14,6 +14,8 @@ function ChatPage({ match, socket }) {
 	const user = useSelector(selectUser);
 	const history = useHistory();
 
+	const keyCheck = true;
+
 	let data = {
 		chatroomId,
 	};
@@ -46,15 +48,21 @@ function ChatPage({ match, socket }) {
 	}, []);
 
 	useEffect(() => {
+		console.log('USE EFFECT: New toggle :', toggle);
 		getAllMessages();
 		// eslint-disable-next-line
 	}, [toggle]);
 
-	const sendMessage = (e) => {
+	const sendMessage = (e, check) => {
 		e.preventDefault();
-		if (socket) {
+		if (socket && !check) {
 			socket.emit('ChatroomMessage', chatroomId, messageData);
-			setMessageData('');
+		}
+
+		if (e.key === 'Enter') {
+			if (socket) {
+				socket.emit('ChatroomMessage', chatroomId, messageData);
+			}
 		}
 	};
 
@@ -68,7 +76,8 @@ function ChatPage({ match, socket }) {
 		socket.emit('joinRoom', chatroomId);
 
 		socket.on('newMessage', () => {
-			setToggle(!toggle);
+			setToggle((prevToggle) => !prevToggle);
+			setMessageData('');
 		});
 
 		return () => {
@@ -76,16 +85,6 @@ function ChatPage({ match, socket }) {
 		};
 		// eslint-disable-next-line
 	}, []);
-
-	const handleKey = (e) => {
-		e.preventDefault();
-		if (e.key === 'Enter') {
-			if (socket) {
-				socket.emit('ChatroomMessage', chatroomId, messageData);
-				setMessageData('');
-			}
-		}
-	};
 
 	return (
 		<div className="chatBox">
@@ -119,7 +118,7 @@ function ChatPage({ match, socket }) {
 			<div className="chatInput">
 				<input
 					value={messageData}
-					onKeyUp={(e) => handleKey(e)}
+					onKeyUp={(e) => sendMessage(e, keyCheck)}
 					onChange={(e) => setMessageData(e.target.value)}
 					placeholder="New Message"
 					type="text"

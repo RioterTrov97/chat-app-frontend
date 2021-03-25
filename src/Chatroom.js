@@ -28,6 +28,10 @@ function Chatroom() {
 		getChatrooms();
 	}, [toggle]);
 
+	/* useEffect(() => {
+		getChatrooms();
+	}, []); */
+
 	const chatRoomIndis = (key, name) => {
 		return (
 			<div key={key} className="chatRooms">
@@ -77,7 +81,7 @@ function Chatroom() {
 					</div>
 					<div className="chatList">
 						<h3>Join Existing Chatroom</h3>
-						{chatrooms.map((chatroom) =>
+						{chatrooms?.map((chatroom) =>
 							chatRoomIndis(chatroom._id, chatroom.name)
 						)}
 					</div>

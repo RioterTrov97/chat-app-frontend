@@ -20,9 +20,9 @@ function App() {
 	const setupSocket = () => {
 		const token = window.localStorage.getItem('token');
 		if (token && !socket) {
-			//https://git.heroku.com/chat-app-socket-2021.git
+			//https://chat-app-socket-2021.herokuapp.com
 			//http://localhost:8000
-			const newSocket = io.connect('http://localhost:8000', {
+			const newSocket = io.connect('https://chat-app-socket-2021.herokuapp.com', {
 				query: {
 					token: window.localStorage.getItem('token'),
 				},
@@ -34,7 +34,7 @@ function App() {
 			});
 
 			newSocket.on('connect', () => {
-				console.log('success: Socket Connected!');
+				console.log('Success: Socket Connected!');
 			});
 
 			setSocket(newSocket);

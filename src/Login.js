@@ -27,7 +27,6 @@ function Login() {
 		axios
 			.post('/user/login', formData)
 			.then((response) => {
-				console.log(response);
 				window.localStorage.setItem('token', response.data.token);
 				setLoading(false);
 				dispatch(
@@ -51,7 +50,6 @@ function Login() {
 		axios
 			.post('/user/register', formData)
 			.then((response) => {
-				console.log(response);
 				const localStorage = window.localStorage;
 				localStorage.setItem('token', response.data.token);
 				setLoading(false);
