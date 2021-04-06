@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './Login.css';
-import axios from './axios';
+import '../styles/Login.css';
+import axios from '../utils/axios';
 import { useDispatch } from 'react-redux';
-import { login } from './features/userSlice';
-import LoadingScreen from './LoadingScreen';
+import { login } from '../features/userSlice';
+import LoadingScreen from '../components/LoadingScreen';
 import { withRouter } from 'react-router-dom';
 
 function Login() {

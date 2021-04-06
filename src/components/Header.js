@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, withRouter } from 'react-router-dom';
-import { logout } from './features/userSlice';
-import './Header.css';
+import { logout } from '../features/userSlice';
+import '../styles/Header.css';
 
 function Header() {
 	const dispatch = useDispatch();

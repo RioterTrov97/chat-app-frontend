@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './App.css';
-import { instanceAutoLogin } from './axios';
+import './styles/App.css';
+import { instanceAutoLogin } from './utils/axios';
 import { login, selectUser } from './features/userSlice';
-import Login from './Login';
-import LoadingScreen from './LoadingScreen';
-import Chatroom from './Chatroom';
+import Login from './screens/Login';
+import LoadingScreen from './components/LoadingScreen';
+import Chatroom from './screens/Chatroom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import ChatPage from './ChatPage';
+import ChatPage from './screens/ChatPage';
 import { io } from 'socket.io-client';
-import Header from './Header';
+import Header from './components/Header';
 
 function App() {
 	const [loading, setLoading] = useState(true);
@@ -20,13 +20,14 @@ function App() {
 	const setupSocket = () => {
 		const token = window.localStorage.getItem('token');
 		if (token && !socket) {
-			//https://chat-app-socket-2021.herokuapp.com
-			//http://localhost:8000
-			const newSocket = io.connect('https://chat-app-socket-2021.herokuapp.com', {
-				query: {
-					token: window.localStorage.getItem('token'),
-				},
-			});
+			const newSocket = io.connect(
+				process.env.URL || 'https://chat-app-socket-2021.herokuapp.com',
+				{
+					query: {
+						token: window.localStorage.getItem('token'),
+					},
+				}
+			);
 
 			newSocket.on('disconnect', () => {
 				setSocket(null);

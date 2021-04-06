@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import LoadingScreen from './LoadingScreen';
-import { instanceAutoLogin } from './axios';
+import LoadingScreen from '../components/LoadingScreen';
+import { instanceAutoLogin } from '../utils/axios';
 import { Link } from 'react-router-dom';
-import './Chatroom.css';
+import '../styles/Chatroom.css';
 
 function Chatroom() {
 	const [loading, setLoading] = useState(false);

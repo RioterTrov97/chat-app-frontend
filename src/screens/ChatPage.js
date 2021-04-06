@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { instanceAutoLogin } from './axios';
-import './ChatPage.css';
-import { selectUser } from './features/userSlice';
+import { instanceAutoLogin } from '../utils/axios';
+import '../styles/ChatPage.css';
+import { selectUser } from '../features/userSlice';
 
 function ChatPage({ match, socket }) {
 	const chatroomId = match.params.id;
