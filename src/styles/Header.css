@@ -1,8 +1,12 @@
 .header {
-	max-height: 10vh;
+	min-height: 100vh;
+	max-width: 20vw;
+	width: 18vw;
 	display: flex;
-	background: rgb(142, 223, 255);
+	flex-direction: column;
+	background: rgb(204, 230, 240);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 3px;
+	position: fixed;
 	overflow: hidden;
 }
 
@@ -10,40 +14,44 @@
 	display: flex;
 	align-items: center;
 	cursor: pointer;
+	padding: 20px 0 20px 20px;
 }
 
 .headerLeft > p {
+	font-size: 24px;
 	font-family: cursive;
-	font-size: 16px;
-	font-weight: 400;
+	font-weight: 500;
+	color: rgb(0, 158, 185);
 }
 
 .headerLeft > img {
 	object-fit: contain;
-	height: 30px;
-	width: 30px;
+	height: 50px;
+	width: 50px;
 	padding-right: 10px;
 	padding-left: 10px;
 }
 
-.headerRight {
-	margin-left: auto;
+.headerNavItems {
+	cursor: pointer;
 	display: flex;
-	overflow: hidden;
+	align-items: center;
+	text-align: left;
+	font-size: 20px;
+	padding: 10px 0 5px 40px;
+	color: rgb(94, 94, 94);
+	border-radius: 10px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
 }
 
-.headerRight > button {
-	cursor: pointer;
-	font-size: 16px;
-	padding: 10px 20px;
-	margin: 10px;
-	border: none;
-	border-radius: 10px;
-	text-decoration: none;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 600;
-	color: #ffffff;
-	background-color: #009c3c;
-	box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 5px;
-	text-align: center;
+.headerNavItems > i {
+	font-size: 24px;
+	padding-right: 10px;
+	color: rgb(75, 75, 75);
+}
+
+.headerNavItems:hover {
+	color: rgb(0, 80, 184);
+	background: lightblue;
 }

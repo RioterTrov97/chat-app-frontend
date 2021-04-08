@@ -1,0 +1,43 @@
+.chatroomsContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.chatRoomsList {
+	min-height: 100vh;
+	margin-left: 18vw;
+	width: 100%;
+	max-width: 1400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.chatList {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.chatListHeader {
+	color: rgb(0, 112, 187);
+	background: rgb(211, 231, 255);
+	width: 400px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.6em;
+	font-weight: 500;
+	margin-top: 30px;
+	padding: 0.7em;
+	border-radius: 20px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.chatListRooms {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}

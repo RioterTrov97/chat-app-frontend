@@ -1,9 +1,37 @@
+.chatBox__container {
+	width: 100%;
+	min-height: 100vh;
+	max-height: 100vh;
+	overflow: hidden;
+}
+
+.chatBoxMain {
+	margin-left: 18vw;
+	display: flex;
+}
+
+.chatBoxMiddle {
+	width: 64vw;
+	padding: 2em;
+}
+
+.chatBoxRight {
+	min-width: 18vw;
+	max-width: 18vw;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: rgb(204, 230, 240);
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 3px;
+}
+
 .chatBox {
 	display: flex;
 	flex-direction: column;
 	background: white;
-	height: 80vh;
-	margin: 30px 40px;
+	min-height: 90vh;
+	max-height: 90vh;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
 	overflow: hidden;
@@ -99,7 +127,7 @@
 
 .chatInput > input {
 	margin-left: 20px;
-	width: 60%;
+	width: 80%;
 	font-size: 16px;
 	padding: 10px;
 	border: none;
@@ -120,10 +148,56 @@
 	border-radius: 5px;
 	text-decoration: none;
 	text-align: center;
-	font-weight: 400;
+	font-weight: 500;
 	font-size: 16px;
 	cursor: pointer;
 	color: white;
 	background: linear-gradient(135deg, #6e8efb, #a777e3);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.chatInput > button:hover {
+	background: #6000d6;
+}
+
+.chatInput > button > i {
+	margin-right: 10px;
+}
+
+.chatBoxImgContainer {
+	padding-top: 30px;
+}
+
+.chatBoxImg {
+	object-fit: cover;
+	height: 200px;
+	width: 90%;
+	border-radius: 10px;
+}
+
+.chatBoxDesc {
+	color: rgb(83, 83, 83);
+	text-align: justify;
+	margin: 20px 30px;
+	font-size: 14px;
+	line-height: 24px;
+	max-height: 360px;
+	display: block; /* Fallback for non-webkit */
+	display: -webkit-box;
+	-webkit-line-clamp: 15;
+	-webkit-box-orient: vertical;
+	max-width: 300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.chatBoxAdmin {
+	background: rgb(225, 193, 255);
+	color: #6000d6;
+	border-radius: 10px;
+	font-weight: 600;
+	padding: 20px 20px;
+	overflow: hidden;
+	max-width: 90%;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 3px;
 }

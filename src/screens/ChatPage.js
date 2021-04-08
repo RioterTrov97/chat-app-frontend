@@ -1,17 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { instanceAutoLogin } from '../utils/axios';
 import '../styles/ChatPage.css';
-import { selectUser } from '../features/userSlice';
 
-function ChatPage({ match, socket }) {
-	const chatroomId = match.params.id;
-	const [chatroomName, setChatroomName] = useState('');
+function ChatPage({ socket, setupSoc }) {
+	const { id: chatroomId } = useParams();
+	const [chatroomDetails, setChatroomDetails] = useState(null);
 	const [messageData, setMessageData] = useState('');
 	const [oldMessages, setOldMessages] = useState([]);
 	const [toggle, setToggle] = useState(false);
-	const user = useSelector(selectUser);
+	const [settingSoc, setSettingSoc] = useState(false);
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo: user } = userLogin;
 	const history = useHistory();
 
 	const keyCheck = true;
@@ -24,7 +26,8 @@ function ChatPage({ match, socket }) {
 		instanceAutoLogin
 			.post('/chatroom/name', data)
 			.then((response) => {
-				setChatroomName(response.data.name);
+				console.log(response.data);
+				setChatroomDetails(response.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -48,7 +51,6 @@ function ChatPage({ match, socket }) {
 	}, []);
 
 	useEffect(() => {
-		console.log('USE EFFECT: New toggle :', toggle);
 		getAllMessages();
 		// eslint-disable-next-line
 	}, [toggle]);
@@ -57,11 +59,13 @@ function ChatPage({ match, socket }) {
 		e.preventDefault();
 		if (socket && !check) {
 			socket.emit('ChatroomMessage', chatroomId, messageData);
+			setMessageData('');
 		}
 
 		if (e.key === 'Enter') {
 			if (socket) {
 				socket.emit('ChatroomMessage', chatroomId, messageData);
+				setMessageData('');
 			}
 		}
 	};
@@ -72,58 +76,104 @@ function ChatPage({ match, socket }) {
 		return <div ref={elementRef} />;
 	};
 
+	const capitalizeFirstChar = (str) =>
+		str.charAt(0).toUpperCase() + str.substring(1);
+
 	useEffect(() => {
-		socket.emit('joinRoom', chatroomId);
+		if (socket) {
+			console.log('socket is here');
+			socket.emit('joinRoom', chatroomId);
 
-		socket.on('newMessage', () => {
-			setToggle((prevToggle) => !prevToggle);
-			setMessageData('');
-		});
+			socket.on('newMessage', () => {
+				setToggle((prevToggle) => !prevToggle);
+				setMessageData('');
+			});
 
-		return () => {
-			socket.emit('leaveRoom', chatroomId);
-		};
+			return () => {
+				socket.emit('leaveRoom', chatroomId);
+			};
+		} else {
+			console.log('setting up socket again');
+			setSettingSoc(!settingSoc);
+			setupSoc();
+		}
+
 		// eslint-disable-next-line
-	}, []);
+	}, [settingSoc]);
 
 	return (
-		<div className="chatBox">
-			<div className="chatHead">
-				<div className="backButton" onClick={() => history.push('/')}>
-					Back
-				</div>
-				<p>Welcome to {chatroomName}</p>
-			</div>
-			<div className="chatBody">
-				{oldMessages.map((msg, i) => (
-					<div key={i} className="messages">
-						<div
-							className={
-								user.id === msg.user ? 'myName' : 'otherName'
-							}>
-							{msg.name}
+		<div className="chatBox__container">
+			<div className="chatBoxMain">
+				<div className="chatBoxMiddle">
+					<div className="chatBox">
+						<div className="chatHead">
+							<div
+								className="backButton"
+								onClick={() => history.push('/')}>
+								Back
+							</div>
+							<p>Welcome to {chatroomDetails?.chatroom?.name}</p>
 						</div>
-						<span
-							className={
-								user.id === msg.user
-									? 'myMessage'
-									: 'OtherMessage'
-							}>
-							{msg.message}
-						</span>
+						<div className="chatBody">
+							{oldMessages.map((msg, i) => (
+								<div key={i} className="messages">
+									<div
+										className={
+											user.user.id === msg.user
+												? 'myName'
+												: 'otherName'
+										}>
+										{msg.name}
+									</div>
+									<span
+										className={
+											user.user.id === msg.user
+												? 'myMessage'
+												: 'OtherMessage'
+										}>
+										{msg.message}
+									</span>
+								</div>
+							))}
+							<AlwaysScrollToBottom />
+						</div>
+						<div className="chatInput">
+							<input
+								value={messageData}
+								onKeyUp={(e) => sendMessage(e, keyCheck)}
+								onChange={(e) => setMessageData(e.target.value)}
+								placeholder="New Message"
+								type="text"
+							/>
+							<button onClick={(e) => sendMessage(e)}>
+								<i className="fas fa-paper-plane"></i>
+								Send
+							</button>
+						</div>
 					</div>
-				))}
-				<AlwaysScrollToBottom />
-			</div>
-			<div className="chatInput">
-				<input
-					value={messageData}
-					onKeyUp={(e) => sendMessage(e, keyCheck)}
-					onChange={(e) => setMessageData(e.target.value)}
-					placeholder="New Message"
-					type="text"
-				/>
-				<button onClick={(e) => sendMessage(e)}>Send Message</button>
+				</div>
+				<div className="chatBoxRight">
+					<div className="chatBoxImgContainer">
+						<img
+							className="chatBoxImg"
+							src={chatroomDetails?.chatroom?.image}
+							alt={chatroomDetails?.chatroom?.name}
+						/>
+					</div>
+
+					<p className="chatBoxDesc">
+						{chatroomDetails?.chatroom?.description}
+					</p>
+					<p className="chatBoxAdmin">
+						Room Owner:{' '}
+						<span>
+							{chatroomDetails?.username &&
+								capitalizeFirstChar(
+									chatroomDetails.username.split(' ')[0]
+								)}
+						</span>
+					</p>
+				</div>
 			</div>
 		</div>
 	);

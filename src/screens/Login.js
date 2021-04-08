@@ -1,71 +1,30 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
-import axios from '../utils/axios';
-import { useDispatch } from 'react-redux';
-import { login } from '../features/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingScreen from '../components/LoadingScreen';
 import { withRouter } from 'react-router-dom';
+import { login, register } from '../actions/userActions';
 
 function Login() {
-	const [loading, setLoading] = useState(false);
 	const [isSignUp, setIsSignUp] = useState(false);
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	const dispatch = useDispatch();
-
-	let formData = {
-		name,
-		email,
-		password,
-	};
+	const userLogin = useSelector((state) => state.userLogin);
+	const { loading, error, userInfo } = userLogin;
 
 	const signIn = (e) => {
 		e.preventDefault();
-		setLoading(true);
-		axios
-			.post('/user/login', formData)
-			.then((response) => {
-				window.localStorage.setItem('token', response.data.token);
-				setLoading(false);
-				dispatch(
-					login({
-						name: response.data.user.name,
-						id: response.data.user.id,
-						email: response.data.user.email,
-						token: response.data.token,
-					})
-				);
-			})
-			.catch((err) => {
-				console.log(err);
-				setLoading(false);
-			});
+		dispatch(login(email, password));
 	};
 
 	const signUp = (e) => {
 		e.preventDefault();
-		setLoading(true);
-		axios
-			.post('/user/register', formData)
-			.then((response) => {
-				const localStorage = window.localStorage;
-				localStorage.setItem('token', response.data.token);
-				setLoading(false);
-				dispatch(
-					login({
-						name: response.data.user.name,
-						id: response.data.user.id,
-						email: response.data.user.email,
-						token: response.data.token,
-					})
-				);
-			})
-			.catch((err) => {
-				console.log('Error: --> ', err);
-				setLoading(false);
-			});
+		console.log(error);
+		console.log(userInfo);
+		dispatch(register(name, email, password));
 	};
 
 	return (
