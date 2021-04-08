@@ -5,13 +5,13 @@ const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 const instance = axios.create({
 	baseURL:
 		process.env.REACT_APP_URL ||
-		'https://chat-app-socket-2021.herokuapp.com',
+		'https://chat-app-socket-2021.herokuapp.com/api/',
 });
 
 export const instanceBearer = axios.create({
 	baseURL:
 		process.env.REACT_APP_URL ||
-		'https://chat-app-socket-2021.herokuapp.com',
+		'https://chat-app-socket-2021.herokuapp.com/api/',
 	headers: {
 		Authorization: 'Bearer ' + userInfo?.token,
 	},
@@ -20,7 +20,7 @@ export const instanceBearer = axios.create({
 export const instanceAutoLogin = axios.create({
 	baseURL:
 		process.env.REACT_APP_URL ||
-		'https://chat-app-socket-2021.herokuapp.com',
+		'https://chat-app-socket-2021.herokuapp.com/api/',
 	headers: {
 		Authorization: 'Bearer ' + userInfo?.token,
 	},
