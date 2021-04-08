@@ -39,10 +39,8 @@
 	align-items: center;
 	justify-content: center;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-	padding: 10px 50px;
-	padding-bottom: 20px;
 	border-radius: 10px;
-	min-width: 350px;
+	width: 75vw;
 	max-width: 350px;
 	background: white;
 	margin-left: 18vw;
@@ -64,11 +62,11 @@
 
 .createChat > div > textarea,
 .createChat > div > input {
-	margin: 10px 20px;
+	margin: 10px 0;
 	font-size: 1em;
 	font-family: inherit;
 	padding: 10px;
-	width: 100%;
+	width: 80%;
 	border: none;
 	background: rgb(238, 238, 238);
 	border-radius: 10px;
@@ -87,6 +85,7 @@
 }
 
 .createChat__button {
+	margin-bottom: 20px;
 	padding: 10px;
 	width: 10em;
 	border: 1px solid rgb(0, 140, 255);
@@ -109,4 +108,10 @@
 .createChat__button:hover {
 	background-position: left;
 	color: white;
+}
+
+@media only screen and (max-width: 1100px) {
+	.createChat {
+		max-width: 82vw;
+	}
 }
