@@ -6,15 +6,17 @@
 	flex-direction: column;
 	background: rgb(204, 230, 240);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 3px;
-	position: fixed;
+	position: fixed !important;
+	top: 0;
 	overflow: hidden;
+	z-index: 10;
 }
 
 .headerLeft {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	padding: 20px 0 20px 20px;
+	padding: 20px 0 20px 30px;
 }
 
 .headerLeft > p {
@@ -28,8 +30,6 @@
 	object-fit: contain;
 	height: 50px;
 	width: 50px;
-	padding-right: 10px;
-	padding-left: 10px;
 }
 
 .headerNavItems {
@@ -54,4 +54,30 @@
 .headerNavItems:hover {
 	color: rgb(0, 80, 184);
 	background: lightblue;
+}
+
+@media only screen and (max-width: 900px) {
+	.header {
+		align-items: center;
+	}
+	.headerLeft > p,
+	.headerNavItems > p {
+		display: none;
+	}
+
+	.headerLeft > img {
+		height: 1.7em;
+		width: 1.7em;
+	}
+
+	.headerNavItems > i {
+		font-size: 1.3em;
+	}
+
+	.headerLeft,
+	.headerNavItems {
+		padding: 20px 0;
+		display: flex;
+		align-items: center;
+	}
 }

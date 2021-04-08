@@ -27,7 +27,7 @@ function Chatrooms() {
 			) : (
 				<div className="chatRoomsList">
 					<div className="chatList">
-						<p className="chatListHeader">Join Existing Chatroom</p>
+						<p className="chatListHeader">Public Chatrooms</p>
 						<div className="chatListRooms">
 							{chatrooms?.map((chatroom) => (
 								<Chatroom

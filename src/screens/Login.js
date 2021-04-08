@@ -49,6 +49,7 @@ function Login() {
 						{isSignUp ? (
 							<div className="logins">
 								<input
+									className="loginInput"
 									value={name}
 									onChange={(e) => setName(e.target.value)}
 									placeholder="Full name"
@@ -58,12 +59,14 @@ function Login() {
 						) : null}
 
 						<input
+							className="loginInput"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							placeholder="Email"
 							type="email"
 						/>
 						<input
+							className="loginInput"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							placeholder="Password"
@@ -72,6 +75,7 @@ function Login() {
 
 						<button
 							type="submit"
+							className="loginButton"
 							onClick={isSignUp ? signUp : signIn}>
 							{isSignUp ? 'Sign Up' : 'Sign In'}
 						</button>

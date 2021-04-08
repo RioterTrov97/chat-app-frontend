@@ -45,8 +45,9 @@
 	flex-direction: column;
 }
 
-.login > div > form > input {
-	width: 350px;
+.loginInput {
+	width: 90%;
+	max-width: 350px;
 	height: 50px;
 	font-size: 18px;
 	font-family: cursive;
@@ -59,44 +60,21 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.login > div > form > input:focus {
+.loginInput:focus {
 	outline: none;
 	border: none;
 }
 
-.login > div > form > button {
-	width: 350px;
+.loginButton {
+	cursor: pointer;
+	width: 95%;
+	max-width: 350px;
 	height: 50px;
-	font-size: large;
+	font-size: 1.2em;
 	color: #fff;
 	border: none;
 	background-color: rgb(59, 199, 255);
 	border-radius: 5px;
-}
-
-.logins {
-	display: flex;
-	flex-direction: column;
-}
-
-.logins > input {
-	width: 350px;
-	height: 50px;
-	font-size: 20px;
-	padding-left: 10px;
-	margin-bottom: 10px;
-	border-radius: 5px;
-	border: none;
-	font-size: 18px;
-	font-family: cursive;
-	outline: none;
-	font-weight: 400;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.logins > input:focus {
-	outline: none;
-	border: none;
 }
 
 .login__register {

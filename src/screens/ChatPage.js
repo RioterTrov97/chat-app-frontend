@@ -163,7 +163,7 @@ function ChatPage({ socket, setupSoc }) {
 									/>
 									<button onClick={(e) => sendMessage(e)}>
 										<i className="fas fa-paper-plane"></i>
-										Send
+										<p>Send</p>
 									</button>
 								</div>
 							</div>

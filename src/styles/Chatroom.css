@@ -40,6 +40,7 @@
 .joinChatRoom {
 	outline: none;
 	cursor: pointer;
+	text-align: center;
 	border-radius: 40px;
 	font-weight: 600;
 	font-size: 16px;
@@ -67,4 +68,17 @@
 	font-size: 0.9em;
 	color: gray;
 	padding-right: 20px;
+}
+
+@media only screen and (max-width: 900px) {
+	.chatRoom {
+		max-width: 250px;
+		overflow: hidden;
+	}
+
+	.chatRoomImg {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
 }
