@@ -9,7 +9,7 @@ const Chatroom = ({ id, user, name, image, description }) => {
 
 	useEffect(() => {
 		instanceAutoLogin
-			.post('/user', { id: user })
+			.post('/user/', { id: user })
 			.then((response) => {
 				setCreator(response.data.username);
 			})

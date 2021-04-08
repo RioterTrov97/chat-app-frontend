@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { instanceAutoLogin } from '../utils/axios';
 import '../styles/ChatPage.css';
+import LoadingScreen from '../components/LoadingScreen';
 
 function ChatPage({ socket, setupSoc }) {
 	const { id: chatroomId } = useParams();
@@ -11,6 +12,7 @@ function ChatPage({ socket, setupSoc }) {
 	const [oldMessages, setOldMessages] = useState([]);
 	const [toggle, setToggle] = useState(false);
 	const [settingSoc, setSettingSoc] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo: user } = userLogin;
@@ -23,14 +25,17 @@ function ChatPage({ socket, setupSoc }) {
 	};
 
 	const getChatroomName = () => {
+		setLoading(true);
 		instanceAutoLogin
 			.post('/chatroom/name', data)
 			.then((response) => {
 				console.log(response.data);
 				setChatroomDetails(response.data);
+				setLoading(false);
 			})
 			.catch((err) => {
 				console.log(err);
+				setLoading(false);
 			});
 	};
 
@@ -104,76 +109,91 @@ function ChatPage({ socket, setupSoc }) {
 	return (
 		<div className="chatBox__container">
 			<div className="chatBoxMain">
-				<div className="chatBoxMiddle">
-					<div className="chatBox">
-						<div className="chatHead">
-							<div
-								className="backButton"
-								onClick={() => history.push('/')}>
-								Back
-							</div>
-							<p>Welcome to {chatroomDetails?.chatroom?.name}</p>
-						</div>
-						<div className="chatBody">
-							{oldMessages.map((msg, i) => (
-								<div key={i} className="messages">
+				{loading ? (
+					<LoadingScreen />
+				) : (
+					<>
+						<div className="chatBoxMiddle">
+							<div className="chatBox">
+								<div className="chatHead">
 									<div
-										className={
-											user.user.id === msg.user
-												? 'myName'
-												: 'otherName'
-										}>
-										{msg.name}
+										className="backButton"
+										onClick={() => history.push('/')}>
+										Back
 									</div>
-									<span
-										className={
-											user.user.id === msg.user
-												? 'myMessage'
-												: 'OtherMessage'
-										}>
-										{msg.message}
-									</span>
+									<p>
+										Welcome to{' '}
+										{chatroomDetails?.chatroom?.name}
+									</p>
 								</div>
-							))}
-							<AlwaysScrollToBottom />
+								<div className="chatBody">
+									{oldMessages.map((msg, i) => (
+										<div key={i} className="messages">
+											<div
+												className={
+													user.user.id === msg.user
+														? 'myName'
+														: 'otherName'
+												}>
+												{msg.name}
+											</div>
+											<span
+												className={
+													user.user.id === msg.user
+														? 'myMessage'
+														: 'OtherMessage'
+												}>
+												{msg.message}
+											</span>
+										</div>
+									))}
+									<AlwaysScrollToBottom />
+								</div>
+								<div className="chatInput">
+									<input
+										value={messageData}
+										onKeyUp={(e) =>
+											sendMessage(e, keyCheck)
+										}
+										onChange={(e) =>
+											setMessageData(e.target.value)
+										}
+										placeholder="New Message"
+										type="text"
+									/>
+									<button onClick={(e) => sendMessage(e)}>
+										<i className="fas fa-paper-plane"></i>
+										Send
+									</button>
+								</div>
+							</div>
 						</div>
-						<div className="chatInput">
-							<input
-								value={messageData}
-								onKeyUp={(e) => sendMessage(e, keyCheck)}
-								onChange={(e) => setMessageData(e.target.value)}
-								placeholder="New Message"
-								type="text"
-							/>
-							<button onClick={(e) => sendMessage(e)}>
-								<i className="fas fa-paper-plane"></i>
-								Send
-							</button>
-						</div>
-					</div>
-				</div>
-				<div className="chatBoxRight">
-					<div className="chatBoxImgContainer">
-						<img
-							className="chatBoxImg"
-							src={chatroomDetails?.chatroom?.image}
-							alt={chatroomDetails?.chatroom?.name}
-						/>
-					</div>
+						<div className="chatBoxRight">
+							<div className="chatBoxImgContainer">
+								<img
+									className="chatBoxImg"
+									src={chatroomDetails?.chatroom?.image}
+									alt={chatroomDetails?.chatroom?.name}
+								/>
+							</div>
 
-					<p className="chatBoxDesc">
-						{chatroomDetails?.chatroom?.description}
-					</p>
-					<p className="chatBoxAdmin">
-						Room Owner:{' '}
-						<span>
-							{chatroomDetails?.username &&
-								capitalizeFirstChar(
-									chatroomDetails.username.split(' ')[0]
-								)}
-						</span>
-					</p>
-				</div>
+							<p className="chatBoxDesc">
+								{chatroomDetails?.chatroom?.description}
+							</p>
+							<p className="chatBoxAdmin">
+								Room Owner:{' '}
+								<span>
+									{chatroomDetails?.username &&
+										capitalizeFirstChar(
+											chatroomDetails.username.split(
+												' '
+											)[0]
+										)}
+								</span>
+							</p>
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	);
