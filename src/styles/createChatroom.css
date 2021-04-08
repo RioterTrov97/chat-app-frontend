@@ -10,6 +10,7 @@
 .createChatGoBack {
 	width: 7em;
 	border: none;
+	margin-left: 5vw;
 	border-radius: 5px;
 	padding: 0.5em;
 	text-align: center;
@@ -41,7 +42,7 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
 	width: 75vw;
-	max-width: 350px;
+	max-width: 450px;
 	background: white;
 	margin-left: 18vw;
 }

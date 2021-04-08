@@ -44,18 +44,16 @@ function Login() {
 			{loading ? (
 				<LoadingScreen />
 			) : (
-				<div>
+				<>
 					<form>
 						{isSignUp ? (
-							<div className="logins">
-								<input
-									className="loginInput"
-									value={name}
-									onChange={(e) => setName(e.target.value)}
-									placeholder="Full name"
-									type="text"
-								/>
-							</div>
+							<input
+								className="loginInput"
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								placeholder="Full name"
+								type="text"
+							/>
 						) : null}
 
 						<input
@@ -74,7 +72,6 @@ function Login() {
 						/>
 
 						<button
-							type="submit"
 							className="loginButton"
 							onClick={isSignUp ? signUp : signIn}>
 							{isSignUp ? 'Sign Up' : 'Sign In'}
@@ -88,7 +85,7 @@ function Login() {
 							{isSignUp ? 'Login' : 'Register Now'}
 						</span>
 					</p>
-				</div>
+				</>
 			)}
 		</div>
 	);
