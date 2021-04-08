@@ -2,7 +2,21 @@ import axios from 'axios';
 
 const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
-const instance = axios.create({
+const instance = axios.create({});
+
+export const instanceBearer = axios.create({
+	headers: {
+		Authorization: 'Bearer ' + userInfo?.token,
+	},
+});
+
+export const instanceAutoLogin = axios.create({
+	headers: {
+		Authorization: 'Bearer ' + userInfo?.token,
+	},
+});
+
+/* const instance = axios.create({
 	baseURL:
 		process.env.REACT_APP_URL ||
 		'https://chat-app-socket-2021.herokuapp.com/api/',
@@ -24,6 +38,6 @@ export const instanceAutoLogin = axios.create({
 	headers: {
 		Authorization: 'Bearer ' + userInfo?.token,
 	},
-});
+}); */
 
 export default instance;
